@@ -37,8 +37,39 @@
 
 <p>
   <strong>Creator:</strong>
-  <%= @group.creator_id %>
+  <%= @group.creator.first_name %>
 </p>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<%if @group.creator_id == current_user.id  %>
+  <%= link_to 'Edit', edit_group_path(@group) %> 
+<%end%>
+
+  <%= link_to 'Back', groups_path %>
+
+<h2> Members </h2>
+<table>
+  <% @group.joined_members.each do |member|%>
+    <tr>
+      <td><%=member.first_name%></td>
+    </tr>
+  <%end%>
+</table>
+
+<%if @group.joined_members.where(:id => current_user.id).present?%>
+
+    <%= form_with model: @invite do |form| %>
+        <%= hidden_field(:invite, :sender_id, :value => current_user.id ) %>
+        <%= hidden_field(:invite, :accecpted, :value => false) %>
+        <%= hidden_field(:invite, :group_id, :value => @group.id) %>
+
+        <div class="field">
+          <%= form.label :receiver_id %>
+          <%= form.select :receiver_id, User.all.collect { |p| [ p.first_name, p.id ] } , { include_blank: 'Please choose' } %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit "Invite"%>
+        </div>
+    <%end%>
+<%end%>
+

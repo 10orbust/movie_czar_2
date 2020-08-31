@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @invite = Invite.new
   end
 
   # GET /groups/new
@@ -25,9 +26,15 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+    
     respond_to do |format|
       if @group.save
+        invite = Invite.new
+        invite.sender_id = current_user.id
+        invite.receiver_id = current_user.id
+        invite.accecpted = true
+        invite.group_id = @group.id
+        invite.save 
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else

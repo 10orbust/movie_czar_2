@@ -5,6 +5,9 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+    group_ids = Invite.where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id).where(:accecpted => true).pluck(:group_id)
+    @future_events = Event.where(:group_id => group_ids).future_events
+    @past_events = Event.where(:group_id => group_ids).past_events 
   end
 
   # GET /events/1

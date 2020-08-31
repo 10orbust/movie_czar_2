@@ -26,4 +26,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :first_name, :last_name, :phone_number, presence: true 
+
+  has_many(:rsvps, { :class_name => "Rsvp", :foreign_key => "user_id", :dependent => :destroy })
+  has_many(:invites, { :class_name => "Invite", :foreign_key => "sender_id", :dependent => :destroy })
+  has_many(:groups, { :class_name => "Group", :foreign_key => "creator_id", :dependent => :destroy })
+  has_many(:events, { :class_name => "Event", :foreign_key => "tsar_id", :dependent => :destroy })
+
+  def unconfirmed_invites
+    Invite.where(:receiver_id => self.id).where(:accecpted => false)
+  end
+
 end

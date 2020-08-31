@@ -5,22 +5,53 @@
 <table>
   <thead>
     <tr>
-      <th>User</th>
       <th>Accepted</th>
-      <th>Event</th>
+      <th>Date</th>
+      <th>Host</th>
+      <th>Location</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @rsvps.each do |rsvp| %>
-      <tr>
-        <td><%= rsvp.user_id %></td>
+      <tr>    
         <td><%= rsvp.accepted %></td>
-        <td><%= rsvp.event_id %></td>
-        <td><%= link_to 'Show', rsvp %></td>
-        <td><%= link_to 'Edit', edit_rsvp_path(rsvp) %></td>
-        <td><%= link_to 'Destroy', rsvp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= rsvp.event.watch_date.strftime("%A, %b %e, %l:%m %p") %></td>
+        <td><%= rsvp.event.group.title%></td>
+        <td><%= rsvp.event.group.address %></td>
+
+        <% if rsvp.accepted == false %>
+
+        <td>
+                <%= form_with(model: rsvp, local: true) do |form| %>
+            <% if rsvp.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(rsvp.errors.count, "error") %> prohibited this rsvp from being saved:</h2>
+
+                <ul>
+                  <% rsvp.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= hidden_field(:rsvp, :user_id, :value => rsvp.user_id) %>
+            <%= hidden_field(:rsvp, :accepted, :value => true) %>
+            <%= hidden_field(:rsvp, :event_id, :value => rsvp.event_id) %>
+
+            <div class="actions">
+              <%= form.submit %>
+            </div>
+          <% end %>
+        </td>
+
+        <%else%>
+       
+        <td><%= link_to 'Destroy Rsvp', rsvp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <%end %>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +59,4 @@
 
 <br>
 
-<%= link_to 'New Rsvp', new_rsvp_path %>
+

@@ -4,7 +4,7 @@ class InvitesController < ApplicationController
   # GET /invites
   # GET /invites.json
   def index
-    @invites = Invite.all
+    @invites = Invite.where(:receiver_id => current_user.id)
   end
 
   # GET /invites/1
@@ -42,7 +42,7 @@ class InvitesController < ApplicationController
   def update
     respond_to do |format|
       if @invite.update(invite_params)
-        format.html { redirect_to @invite, notice: 'Invite was successfully updated.' }
+        format.html { redirect_to :events, notice: 'Invite was successfully updated.' }
         format.json { render :show, status: :ok, location: @invite }
       else
         format.html { render :edit }
@@ -71,4 +71,5 @@ class InvitesController < ApplicationController
     def invite_params
       params.require(:invite).permit(:sender_id, :receiver_id, :accecpted, :group_id)
     end
+
 end

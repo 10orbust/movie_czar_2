@@ -37,19 +37,17 @@
   </div>
 
   <div class="field">
-    <%= form.label :rsvp_send_before %>
-    <%= form.text_field :rsvp_send_before %>
+    <%= form.label :rsvp_send_before, "How many days before the event should you send an RSVP?" %>
+    <%= form.select :rsvp_send_before, options_for_select([["Select One", ""], "1", "2", "3"]) %>
+
   </div>
 
   <div class="field">
-    <%= form.label :repeats_every %>
-    <%= form.text_field :repeats_every %>
+    <%= form.label :repeats_every, "How often should your event repeat?" %>
+    <%= form.select :repeats_every, options_for_select([["Select One", ""], "week", "two_weeks", "month", "six_months", "year"]) %>
   </div>
 
-  <div class="field">
-    <%= form.label :creator_id %>
-    <%= form.number_field :creator_id %>
-  </div>
+ <%= hidden_field(:group, :creator_id, :value => current_user.id) %>
 
   <div class="actions">
     <%= form.submit %>

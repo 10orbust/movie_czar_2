@@ -2,7 +2,7 @@
 
 <p>
   <strong>Tsar:</strong>
-  <%= @event.tsar_id %>
+  <%= @event.tsar.first_name %>
 </p>
 
 <p>
@@ -12,8 +12,31 @@
 
 <p>
   <strong>Group:</strong>
-  <%= @event.group_id %>
+  <%= @event.group.title %>
 </p>
+
+<p>
+  <strong>Event Start:</strong>
+  <%= @event.watch_date.strftime("%A, %b %d") %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @event.group.address %>
+</p>
+
+<p>
+  <strong>Rsvps</strong>
+</p>
+
+<ul>
+  <% @event.rsvps.each do |rsvp| %> 
+    <li>
+      <%= rsvp.user.first_name %> <%= rsvp.accepted == true ? ("Rsvp'ed") : ("Has not Rsvp'ed")%> 
+    </li>
+
+  <% end %>
+</ul>
 
 <p>
   <strong>Custom message:</strong>

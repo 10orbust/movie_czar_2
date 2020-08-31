@@ -11,24 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :sender_id %>
-    <%= form.number_field :sender_id %>
-  </div>
+  <%= hidden_field(:invite, :sender_id, :value => current_user.id) %>
 
   <div class="field">
     <%= form.label :receiver_id %>
-    <%= form.number_field :receiver_id %>
+    <%= form.select :receiver_id, User.all.collect { |p| [ p.first_name, p.id ] } , { include_blank: 'Please choose' } %>
   </div>
 
   <div class="field">
     <%= form.label :accecpted %>
-    <%= form.check_box :accecpted %>
+    <%= form.check_box :accecpted , :value => "true" %>
   </div>
 
   <div class="field">
     <%= form.label :group_id %>
-    <%= form.number_field :group_id %>
+    <%= form.select :group_id, Group.all.collect { |p| [ p.title, p.id ] } , { include_blank: 'Please choose' }%>
   </div>
 
   <div class="actions">

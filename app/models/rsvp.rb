@@ -10,12 +10,9 @@
 #  user_id    :integer
 #
 class Rsvp < ApplicationRecord
-    validate :unique_combination
-
-    def unique_combination
-     Rsvp.exists?(
-        :event_id => self.event_id,
-        :user_id => self.user_id
-      )
-    end
+    
+    belongs_to(:user, { :required => false, :class_name => "User", :foreign_key => "user_id" })
+    belongs_to(:event, { :required => false, :class_name => "Event", :foreign_key => "event_id" })
+    validates :user_id, uniqueness: { scope: :event_id,
+      message: "RSVP already created" }
 end

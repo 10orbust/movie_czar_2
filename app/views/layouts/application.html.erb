@@ -10,6 +10,31 @@
   </head>
 
   <body>
+    
+    
+    <% if user_signed_in? %>
+      <div><%= link_to "Sign out", :destroy_user_session, :method => :delete %></div>
+      <div><%= link_to "Edit info", :edit_user_registration %>
+      <div><%= link_to "Events", :events %>
+      <div><%= link_to "Groups", :groups %>
+
+      <%if current_user.unconfirmed_invites.count >= 1%>
+        <div><%= link_to "Invites (#{current_user.unconfirmed_invites.count})", :invites %>
+      <%else%>
+        <div><%= link_to "Invites", :invites %>
+      <%end%>
+
+      <%if current_user.rsvps.where(:accepted => false).count >= 1%>
+        <div><%= link_to "Rsvps (#{current_user.rsvps.where(:accepted => false).count})", :rsvps %>
+      <%else%>
+        <div><%= link_to "Rsvps", :rsvps %>
+      <%end%>
+    <% else %>
+      <div><%= link_to "Sign up", :new_user_registration %></div>
+      <div><%= link_to "Sign in", :user_session %></div>
+    <% end %>
+    
+    
     <%= yield %>
   </body>
 </html>

@@ -28,8 +28,9 @@ User.destroy_all
     
     user.save! 
 end
-
-p " #{User.count} users"
+p User.first
+p "#{User.count} users"
+users = User.all 
 
 
 #  address          :string
@@ -41,18 +42,18 @@ p " #{User.count} users"
 #  title            :string
 #  creator_id       :integer
 
-users = User.all 
 
 Group.destroy_all
-
+    repeat = ["week", "two_weeks", "month", "six_months", "year"]
+    send_before_days = ["1", "2", "3"]
 3.times do 
     group = Group.new 
     group.address = Faker::Address.full_address
-    group.description = "these are test groups please change"
+    group.description = "These are test groups please change"
     group.event_start = Faker::Time.between_dates(from: Date.today - 1, to: Date.today, period: :evening) #=> "2014-09-19 20:21:03 -0700"
     group.photo = "https://picsum.photos/200"
-    group.repeats_every = "week"
-    group.rsvp_send_before = "2"
+    group.repeats_every = repeat.sample
+    group.rsvp_send_before = send_before_days.sample
     group.title = Faker::Company.name
     group.creator_id = users.sample.id 
     group.save
@@ -71,13 +72,34 @@ Event.destroy_all
 #  group_id       :integer
 #  tsar_id        :integer
 
-20.times do 
+groups.each do |group|
     event = Event.new
     event.custom_message = "test message"
     event.movie_watched = Faker::Movie.title
-    event.group_id = groups.sample.id 
+    event.group_id = group.id 
     event.tsar_id = users.sample.id
-    event.watch_date = Faker::Time.between(from: DateTime.now - 7, to: DateTime.now + 7, format: :default) #=> "Tue, 16 Oct 2018 10:48:27 AM -05:00"
+    event.watch_date = group.event_start
+    event.save 
+end
+
+Event.all.each do |old_event|
+    group = old_event.group
+    event = Event.new
+    event.custom_message = "test message"
+    event.movie_watched = Faker::Movie.title
+    event.group_id = old_event.group_id
+    event.tsar_id = users.sample.id
+        if group.repeats_every == "week"
+            event.watch_date = old_event.watch_date + 7.days
+        elsif group.repeats_every == "two_weeks"
+            event.watch_date = old_event.watch_date + 14.days
+        elsif group.repeats_every == "month"
+            event.watch_date = old_event.watch_date + 1.month
+        elsif group.repeats_every == "six_months"
+            event.watch_date = old_event.watch_date + 6.month
+        elsif group.repeats_every == "year"
+            event.watch_date = old_event.watch_date + 1.year
+        end
     event.save 
 end
 
