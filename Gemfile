@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 gem 'rubocop-performance'
 gem 'rubocop-rails'
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
@@ -37,6 +38,7 @@ group :development, :test do
   gem "awesome_print"
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do
