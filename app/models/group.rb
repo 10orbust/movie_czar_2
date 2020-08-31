@@ -15,4 +15,5 @@
 #  creator_id       :integer
 #
 class Group < ApplicationRecord
+    validates :creator_id, :rsvp_send_before, :title, :event_start, presence: true
 end

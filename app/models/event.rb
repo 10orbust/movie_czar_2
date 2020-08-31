@@ -11,4 +11,5 @@
 #  tsar_id        :integer
 #
 class Event < ApplicationRecord
+    validates :group_id, :tsar_id, presence: true 
 end

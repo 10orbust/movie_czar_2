@@ -10,4 +10,12 @@
 #  user_id    :integer
 #
 class Rsvp < ApplicationRecord
+    validate :unique_combination
+
+    def unique_combination
+     Rsvp.exists?(
+        :event_id => self.event_id,
+        :user_id => self.user_id
+      )
+    end
 end
