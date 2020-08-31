@@ -10,6 +10,21 @@
   </head>
 
   <body>
+    
+    
+    <% if user_signed_in? %>
+      <div><%= link_to "Sign out", :destroy_user_session %></div>
+      <div><%= link_to "Edit info", :edit_user_registration %>
+      <div><%= link_to "events", :events %>
+      <div><%= link_to "groups", :groups %>
+      <div><%= link_to "invites", :invites %>
+      <div><%= link_to "rsvps", :rsvps %>
+    <% else %>
+      <div><%= link_to "Sign up", :new_user_registration %></div>
+      <div><%= link_to "Sign in", :user_session %></div>
+    <% end %>
+    
+    
     <%= yield %>
   </body>
 </html>
