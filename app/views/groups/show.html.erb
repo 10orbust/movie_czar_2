@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @group.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @group.description %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @group.address %>
+</p>
+
+<p>
+  <strong>Photo:</strong>
+  <%= @group.photo %>
+</p>
+
+<p>
+  <strong>Event start:</strong>
+  <%= @group.event_start %>
+</p>
+
+<p>
+  <strong>Rsvp send before:</strong>
+  <%= @group.rsvp_send_before %>
+</p>
+
+<p>
+  <strong>Repeats every:</strong>
+  <%= @group.repeats_every %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @group.creator_id %>
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>
