@@ -15,5 +15,9 @@
 #  creator_id       :integer
 #
 class Group < ApplicationRecord
+    belongs_to(:creator, { :required => false, :class_name => "User", :foreign_key => "creator_id" })
+    has_many(:events, { :class_name => "Event", :foreign_key => "group_id", :dependent => :destroy })
+    has_many(:invites, { :class_name => "Invite", :foreign_key => "group_id", :dependent => :destroy })
+    
     validates :creator_id, :rsvp_send_before, :title, :event_start, presence: true
 end

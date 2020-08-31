@@ -11,6 +11,9 @@
 #
 class Rsvp < ApplicationRecord
     validate :unique_combination
+    belongs_to(:user, { :required => false, :class_name => "User", :foreign_key => "user_id" })
+    belongs_to(:event, { :required => false, :class_name => "Event", :foreign_key => "event_id" })
+
 
     def unique_combination
      Rsvp.exists?(
