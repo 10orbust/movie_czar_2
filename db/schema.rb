@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_31_190952) do
+ActiveRecord::Schema.define(version: 2020_08_31_210712) do
 
   create_table "events", force: :cascade do |t|
     t.integer "tsar_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_08_31_190952) do
     t.string "custom_message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "watch_date"
   end
 
   create_table "groups", force: :cascade do |t|

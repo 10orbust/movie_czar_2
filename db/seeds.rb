@@ -17,7 +17,7 @@ User.destroy_all
 #  phone_number           :string
 
 
-15.times do 
+20.times do 
     user = User.new 
     user.first_name = Faker::Name.first_name
     user.last_name = Faker::Name.last_name 
@@ -71,12 +71,13 @@ Event.destroy_all
 #  group_id       :integer
 #  tsar_id        :integer
 
-2.times do 
+20.times do 
     event = Event.new
     event.custom_message = "test message"
     event.movie_watched = Faker::Movie.title
     event.group_id = groups.sample.id 
     event.tsar_id = users.sample.id
+    event.watch_date = Faker::Time.between(from: DateTime.now - 7, to: DateTime.now + 7, format: :default) #=> "Tue, 16 Oct 2018 10:48:27 AM -05:00"
     event.save 
 end
 
@@ -93,7 +94,7 @@ Invite.destroy_all
 #  receiver_id :integer
 #  sender_id   :integer
 
-20.times do 
+50.times do 
     invite = Invite.new
     invite.group_id = groups.sample.id
     invite.accecpted = Faker::Boolean.boolean
@@ -112,7 +113,7 @@ Rsvp.destroy_all
 #  event_id   :integer
 #  user_id    :integer
 
-20.times do
+100.times do
     rsvp = Rsvp.new
     rsvp.accepted = Faker::Boolean.boolean
     rsvp.event_id = events.sample.id 
