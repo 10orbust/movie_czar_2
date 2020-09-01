@@ -13,7 +13,7 @@
 class Invite < ApplicationRecord
   belongs_to(:sender, { :required => false, :class_name => "User", :foreign_key => "sender_id" })
   belongs_to(:group, { :required => false, :class_name => "Group", :foreign_key => "group_id" })
-  belongs_to(:receiver, { :required => false, :class_name => "User", :foreign_key => "reciever_id" })
+  belongs_to(:receiver, { :required => false, :class_name => "User", :foreign_key => "receiver_id" })
 
     validates :group_id, :receiver_id, :sender_id, presence: true
     validate :unique_combination

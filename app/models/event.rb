@@ -17,4 +17,13 @@ class Event < ApplicationRecord
     has_many(:rsvps, { :class_name => "Rsvp", :foreign_key => "event_id", :dependent => :destroy })
     validates :group_id, :tsar_id, :watch_date, presence: true 
     validates :watch_date, uniqueness: true
+
+    def self.future_events
+        self.where("watch_date > ?", Date.today)
+    end
+
+    def self.past_events
+        self.where("watch_date < ?", Date.today)
+    end
+        
 end

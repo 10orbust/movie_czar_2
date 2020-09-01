@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Sender</th>
-      <th>Receiver</th>
+      <th>Receiver</th> 
       <th>Accecpted</th>
       <th>Group</th>
       <th colspan="3"></th>
@@ -16,10 +16,10 @@
   <tbody>
     <% @invites.each do |invite| %>
       <tr>
-        <td><%= invite.sender_id %></td>
-        <td><%= invite.receiver_id %></td>
+        <td><%= invite.sender.first_name %></td>
+        <td><%= invite.receiver.first_name %></td>
         <td><%= invite.accecpted %></td>
-        <td><%= invite.group_id %></td>
+        <td><%= invite.group.title %></td>
         <td><%= link_to 'Show', invite %></td>
         <td><%= link_to 'Edit', edit_invite_path(invite) %></td>
         <td><%= link_to 'Destroy', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>

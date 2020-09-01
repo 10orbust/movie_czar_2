@@ -13,7 +13,7 @@
     
     
     <% if user_signed_in? %>
-      <div><%= link_to "Sign out", :destroy_user_session %></div>
+      <div><%= link_to "Sign out", :destroy_user_session, :method => :delete %></div>
       <div><%= link_to "Edit info", :edit_user_registration %>
       <div><%= link_to "events", :events %>
       <div><%= link_to "groups", :groups %>

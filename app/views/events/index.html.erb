@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Events</h1>
+<h1><%= @user_events %>
+
+<h1>Future Events</h1>
 
 <table>
   <thead>
@@ -8,18 +10,46 @@
       <th>Tsar</th>
       <th>Movie watched</th>
       <th>Group</th>
-      <th>Custom message</th>
+      <th>Watch Date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @events.each do |event| %>
+    <% @future_events.order(:watch_date).each do |event| %>
       <tr>
-        <td><%= event.tsar_id %></td>
+        <td><%= event.tsar.first_name %></td>
         <td><%= event.movie_watched %></td>
-        <td><%= event.group_id %></td>
-        <td><%= event.custom_message %></td>
+        <td><%= event.group.title %></td>
+        <td><%= event.watch_date.strftime("%b %d, %Y") %></td>
+        <td><%= link_to 'Show', event %></td>
+        <td><%= link_to 'Edit', edit_event_path(event) %></td>
+        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+  <h2>Past Events</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tsar</th>
+      <th>Movie watched</th>
+      <th>Group</th>
+      <th>Watch Date</th>
+      <th colspan="3"></th>
+    </tr> 
+  </thead>
+
+  <tbody>
+    <% @past_events.order(watch_date: :desc).each do |event| %>
+      <tr>
+        <td><%= event.tsar.first_name %></td>
+        <td><%= event.movie_watched %></td>
+        <td><%= event.group.title %></td>
+        <td><%= event.watch_date.strftime("%b %d, %Y") %></td>
         <td><%= link_to 'Show', event %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
