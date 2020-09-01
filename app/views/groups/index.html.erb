@@ -11,8 +11,7 @@
       <th>Photo</th>
       <th>Event start</th>
       <th>Rsvp send before</th>
-      <th>Repeats every</th>
-      <th>Creator</th>
+      <th>Repeats every</th>   
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,17 +19,14 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td><%= group.title %></td>
+       
+        <td><%= link_to group.title, group %></td>
         <td><%= group.description %></td>
         <td><%= group.address %></td>
         <td><%= group.photo %></td>
         <td><%= group.event_start %></td>
         <td><%= group.rsvp_send_before %></td>
         <td><%= group.repeats_every %></td>
-        <td><%= group.creator_id %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

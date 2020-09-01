@@ -4,7 +4,7 @@ class RsvpsController < ApplicationController
   # GET /rsvps
   # GET /rsvps.json
   def index
-    @rsvps = Rsvp.all
+    @rsvps = Rsvp.where(:user_id => current_user.id)
   end
 
   # GET /rsvps/1

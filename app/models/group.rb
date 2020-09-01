@@ -20,4 +20,12 @@ class Group < ApplicationRecord
     has_many(:invites, { :class_name => "Invite", :foreign_key => "group_id", :dependent => :destroy })
     
     validates :creator_id, :rsvp_send_before, :title, :event_start, presence: true
+
+    def joined_members 
+       members = []
+       invites = Invite.where(:group_id => self.id)
+       invites.where(:accecpted => true).pluck(:sender_id).each{|member_id| members.push(member_id)}
+       invites.where(:accecpted => true).pluck(:receiver_id).each{|member_id| members.push(member_id)}
+       return User.where(:id => members)
+    end
 end

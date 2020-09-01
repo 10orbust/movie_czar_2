@@ -46,10 +46,7 @@
     <%= form.text_field :repeats_every %>
   </div>
 
-  <div class="field">
-    <%= form.label :creator_id %>
-    <%= form.number_field :creator_id %>
-  </div>
+  <%= hidden_field(:group, :creator_id, :value => current_user.id) %>
 
   <div class="actions">
     <%= form.submit %>

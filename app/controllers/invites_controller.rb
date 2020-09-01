@@ -4,7 +4,7 @@ class InvitesController < ApplicationController
   # GET /invites
   # GET /invites.json
   def index
-    @invites = Invite.all
+    @invites = Invite.where(:receiver_id => current_user.id)
   end
 
   # GET /invites/1
@@ -71,4 +71,5 @@ class InvitesController < ApplicationController
     def invite_params
       params.require(:invite).permit(:sender_id, :receiver_id, :accecpted, :group_id)
     end
+
 end

@@ -25,4 +25,12 @@ class Invite < ApplicationRecord
         :sender_id => self.sender_id
       )
     end
+
+    def self.already_joined
+      self.where(:accecpted => true)
+    end
+    
+    def member
+      User.where("id = ? or id = ?", self.sender_id, self.receiver_id).first
+    end
 end
