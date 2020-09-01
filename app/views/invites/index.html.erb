@@ -20,9 +20,23 @@
         <td><%= invite.receiver.first_name %></td>
         <td><%= invite.accecpted %></td>
         <td><%= invite.group.title %></td>
-        <td><%= link_to 'Show', invite %></td>
-        <td><%= link_to 'Edit', edit_invite_path(invite) %></td>
-        <td><%= link_to 'Destroy', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%if invite.accecpted == false%>
+
+            <%= form_with(model: invite, local: true) do |form| %>
+    
+              <%= hidden_field(:invite, :sender_id, :value => invite.sender_id ) %>
+              <%= hidden_field(:invite, :receiver_id, :value => invite.receiver_id) %>
+              <%= hidden_field(:invite, :accecpted, :value => true) %>
+              <%= hidden_field(:invite, :group_id, :value => invite.group_id) %>
+
+              <div class="actions">
+                <%= form.submit "Accept Invite" %>
+              </div>
+            <% end %>
+          <%end%>
+        </td>
+        <td><%= link_to 'Leave Group', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

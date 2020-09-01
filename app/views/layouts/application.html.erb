@@ -17,8 +17,18 @@
       <div><%= link_to "Edit info", :edit_user_registration %>
       <div><%= link_to "events", :events %>
       <div><%= link_to "groups", :groups %>
-      <div><%= link_to "invites", :invites %>
-      <div><%= link_to "rsvps", :rsvps %>
+
+      <%if current_user.unconfirmed_invites.count >= 1%>
+        <div><%= link_to "invites (#{current_user.unconfirmed_invites.count})", :invites %>
+      <%else%>
+        <div><%= link_to "invites", :invites %>
+      <%end%>
+
+      <%if current_user.rsvps.where(:accepted => false).count >= 1%>
+        <div><%= link_to "rsvps#{current_user.rsvps.where(:accepted => false).count}", :rsvps %>
+      <%else%>
+        <div><%= link_to "rsvps", :rsvps %>
+      <%end%>
     <% else %>
       <div><%= link_to "Sign up", :new_user_registration %></div>
       <div><%= link_to "Sign in", :user_session %></div>

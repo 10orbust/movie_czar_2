@@ -31,4 +31,9 @@ class User < ApplicationRecord
   has_many(:invites, { :class_name => "Invite", :foreign_key => "sender_id", :dependent => :destroy })
   has_many(:groups, { :class_name => "Group", :foreign_key => "creator_id", :dependent => :destroy })
   has_many(:events, { :class_name => "Event", :foreign_key => "tsar_id", :dependent => :destroy })
+
+  def unconfirmed_invites
+    Invite.where(:receiver_id => self.id).where(:accecpted => false)
+  end
+
 end
