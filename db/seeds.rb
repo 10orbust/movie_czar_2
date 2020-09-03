@@ -72,6 +72,16 @@ Event.destroy_all
 #  group_id       :integer
 #  tsar_id        :integer
 
+3.times do 
+    group = groups.sample
+    event = Event.new
+    event.custom_message = "test message"
+    event.movie_watched = Faker::Movie.title
+    event.group_id = group.id 
+    event.tsar_id = users.sample.id
+    event.watch_date = group.event_start
+    event.save 
+    end
 
 20.times do 
     group = groups.sample

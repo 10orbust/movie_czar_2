@@ -37,9 +37,9 @@
               </div>
             <% end %>
 
-            <%= hidden_field(:rsvp, :user_id) %>
+            <%= hidden_field(:rsvp, :user_id, :value => rsvp.user_id) %>
             <%= hidden_field(:rsvp, :accepted, :value => true) %>
-            <%= hidden_field(:rsvp, :event_id ) %>
+            <%= hidden_field(:rsvp, :event_id, :value => rsvp.event_id) %>
 
             <div class="actions">
               <%= form.submit %>
