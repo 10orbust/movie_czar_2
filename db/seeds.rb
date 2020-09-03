@@ -72,8 +72,7 @@ Event.destroy_all
 #  group_id       :integer
 #  tsar_id        :integer
 
-3.times do 
-    group = groups.sample
+groups.each do |group|
     event = Event.new
     event.custom_message = "test message"
     event.movie_watched = Faker::Movie.title

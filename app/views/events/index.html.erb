@@ -23,7 +23,7 @@
         <td><%= event.tsar.first_name %></td>
         <td><%= event.movie_watched %></td>
         <td><%= event.group.title %></td>
-        <td><%= event.watch_date.strftime("%b %d, %Y") %></td>
+        <td><%= event.watch_date.strftime("%A %b %d, %Y") %></td>
         <td><%= event.watch_date.strftime(" %l:%m %p") %></td>
         <td><%= event.group.address %></td>
         <td><%= link_to 'Show', event %></td>
