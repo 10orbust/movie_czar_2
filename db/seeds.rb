@@ -29,7 +29,7 @@ User.destroy_all
     user.save! 
 end
 p User.first
-p " #{User.count} users"
+p "#{User.count} users"
 users = User.all 
 
 
@@ -80,25 +80,25 @@ groups.each do |group|
     event.tsar_id = users.sample.id
     event.watch_date = group.event_start
     event.save 
-    end
+end
 
-20.times do 
-    group = groups.sample
+Event.all.each do |old_event|
+    group = old_event.group
     event = Event.new
     event.custom_message = "test message"
     event.movie_watched = Faker::Movie.title
-    event.group_id = group.id 
+    event.group_id = old_event.group_id
     event.tsar_id = users.sample.id
         if group.repeats_every == "week"
-            event.watch_date = group.event_start + 7.days
+            event.watch_date = old_event.watch_date + 7.days
         elsif group.repeats_every == "two_weeks"
-            event.watch_date = group.event_start + 14.days
+            event.watch_date = old_event.watch_date + 14.days
         elsif group.repeats_every == "month"
-            event.watch_date = group.event_start + 1.month
+            event.watch_date = old_event.watch_date + 1.month
         elsif group.repeats_every == "six_months"
-            event.watch_date = group.event_start + 6.month
+            event.watch_date = old_event.watch_date + 6.month
         elsif group.repeats_every == "year"
-            event.watch_date = group.event_start + 1.year
+            event.watch_date = old_event.watch_date + 1.year
         end
     event.save 
 end
