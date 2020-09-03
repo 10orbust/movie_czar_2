@@ -34,9 +34,11 @@
                 <%= form.submit "Accept Invite" %>
               </div>
             <% end %>
+             <td><%= link_to 'Delete Invite', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <%else%>
+             <td><%= link_to 'Leave Group', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <%end%>
         </td>
-        <td><%= link_to 'Leave Group', invite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

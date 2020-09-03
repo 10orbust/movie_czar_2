@@ -44,7 +44,7 @@ users = User.all
 
 
 Group.destroy_all
-    repeat = ["Week", "Month", "Two Weeks", "4 Weeks", "6 Months" "Year"]
+    repeat = ["week", "two_weeks", "month", "six_months", "year"]
     send_before_days = ["1", "2", "3"]
 3.times do 
     group = Group.new 
@@ -72,13 +72,25 @@ Event.destroy_all
 #  group_id       :integer
 #  tsar_id        :integer
 
+
 20.times do 
+    group = groups.sample
     event = Event.new
     event.custom_message = "test message"
     event.movie_watched = Faker::Movie.title
-    event.group_id = groups.sample.id 
+    event.group_id = group.id 
     event.tsar_id = users.sample.id
-    event.watch_date = Faker::Time.between(from: DateTime.now - 7, to: DateTime.now + 7, format: :default) #=> "Tue, 16 Oct 2018 10:48:27 AM -05:00"
+        if group.repeats_every == "week"
+            event.watch_date = group.event_start + 7.days
+        elsif group.repeats_every == "two_weeks"
+            event.watch_date = group.event_start + 14.days
+        elsif group.repeats_every == "month"
+            event.watch_date = group.event_start + 1.month
+        elsif group.repeats_every == "six_months"
+            event.watch_date = group.event_start + 6.month
+        elsif group.repeats_every == "year"
+            event.watch_date = group.event_start + 1.year
+        end
     event.save 
 end
 

@@ -16,6 +16,8 @@ class Invite < ApplicationRecord
   belongs_to(:receiver, { :required => false, :class_name => "User", :foreign_key => "receiver_id" })
 
     validates :group_id, :receiver_id, :sender_id, presence: true
+    validates :receiver_id, uniqueness: { scope: :group_id,
+      message: "Invite already created" }
     validate :unique_combination
 
     def unique_combination
@@ -23,7 +25,7 @@ class Invite < ApplicationRecord
         :group_id => self.group_id,
         :receiver_id => self.receiver_id,
         :sender_id => self.sender_id
-      )
+      ) == false
     end
 
     def self.already_joined
