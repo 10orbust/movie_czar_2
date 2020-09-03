@@ -28,8 +28,9 @@ User.destroy_all
     
     user.save! 
 end
-
+p User.first
 p " #{User.count} users"
+users = User.all 
 
 
 #  address          :string
@@ -41,18 +42,18 @@ p " #{User.count} users"
 #  title            :string
 #  creator_id       :integer
 
-users = User.all 
 
 Group.destroy_all
-
+    repeat = ["Week", "Month", "Two Weeks", "4 Weeks", "6 Months" "Year"]
+    send_before_days = ["1", "2", "3"]
 3.times do 
     group = Group.new 
     group.address = Faker::Address.full_address
-    group.description = "these are test groups please change"
+    group.description = "These are test groups please change"
     group.event_start = Faker::Time.between_dates(from: Date.today - 1, to: Date.today, period: :evening) #=> "2014-09-19 20:21:03 -0700"
     group.photo = "https://picsum.photos/200"
-    group.repeats_every = "week"
-    group.rsvp_send_before = "2"
+    group.repeats_every = repeat.sample
+    group.rsvp_send_before = send_before_days.sample
     group.title = Faker::Company.name
     group.creator_id = users.sample.id 
     group.save
