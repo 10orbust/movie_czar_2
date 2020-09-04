@@ -1,16 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Groups</h1>
+<h5><%= link_to 'Create a new group', new_group_path %></h5>
 
-<table>
+<table class = "table">
   <thead>
     <tr>
       <th>Title</th>
       <th>Description</th>
       <th>Address</th>
       <th>Photo</th>
-      <th>Event start</th>
-      <th>Rsvp send before</th>
+      <th>First Event</th>
       <th>Repeats every</th>   
       <th colspan="3"></th>
     </tr>
@@ -23,10 +23,9 @@
         <td><%= link_to group.title, group %></td>
         <td><%= group.description %></td>
         <td><%= group.address %></td>
-        <td><%= group.photo %></td>
-        <td><%= group.event_start %></td>
-        <td><%= group.rsvp_send_before %></td>
-        <td><%= group.repeats_every %></td>
+        <td><img src=<%= group.photo %>></td>
+        <td><%= group.event_start.strftime("%a %b %e") %></td>
+        <td><%= group.repeats_every.capitalize %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +33,4 @@
 
 <br>
 
-<%= link_to 'New Group', new_group_path %>
+
