@@ -64,9 +64,20 @@ task({ :pick_tsar=> :environment}) do
             end
         end
          sample_tsar = final_tsars.pluck(:user_id).sample
-        p final_tsar = User.find_by(:id => sample_tsar)
-    end
+         final_tsar = User.find_by(:id => sample_tsar)
+        
+         # Create an instance of Postmark::ApiClient:
+         client = Postmark::ApiClient.new(ENV['POSTMARKAPI'])
 
+         # Send an email:
+         client.deliver(
+         from: 'patrick@firstdraft.com',
+         to: final_tsar.email,
+         subject: 'You are the new latest Tsar',
+         html_body: "You have been chosen to be the newest Movie Tsar, please choose a movie for the upcoming night",
+         track_opens: true,
+         message_stream: 'outbound')
+    end
 end
 
 task({ :reminder_rsvp=> :environment}) do
@@ -80,8 +91,8 @@ task({ :reminder_rsvp=> :environment}) do
 
                   # Send an email:
                   client.deliver(
-                  from: rsvp.user.email,
-                  to: 'patrick@firstdraft.com',
+                  from: 'patrick@firstdraft.com',
+                  to: rsvp.user.email,
                   subject: 'Event Reminder From Movie Tsar',
                   html_body: "Just a friendly reminder that you have a party coming up on #{event.watch_date.strftime("%A %b %e")} at  
                   #{event.watch_date.strftime("%l:%M %p")}.  The patry takes place at #{event.group.address}
@@ -101,8 +112,8 @@ task({ :reminder_rsvp=> :environment}) do
 
                  # Send an email:
                  client.deliver(
-                 from: rsvp.user.email,
-                 to: 'patrick@firstdraft.com',
+                 from: 'patrick@firstdraft.com',
+                 to: rsvp.user.email,
                  subject: 'Event Reminder From Movie Tsar',
                  html_body: "Just a friendly reminder that you have a party coming #{event.watch_date.strftime("%A %b %e")} at
                  #{event.watch_date.strftime("%l:%M %p")}.  The patry takes place at #{event.group.address}
