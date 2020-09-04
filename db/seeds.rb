@@ -26,7 +26,7 @@ User.destroy_all
     user.password = "password"
     user.password_confirmation = "password"
     
-    user.save! 
+    user.save
 end
 p User.first
 p "#{User.count} users"

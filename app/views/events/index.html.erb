@@ -20,7 +20,11 @@
   <tbody>
     <% @future_events.order(:watch_date).each do |event| %>
       <tr>
-        <td><%= event.tsar.first_name %></td>
+        <% if event.tsar.present? %>
+          <td><%= event.tsar.first_name %></td>
+        <% else %>
+          <td>"Tsar not yet picked"</td>
+        <%end%>
         <td><%= event.movie_watched %></td>
         <td><%= event.group.title %></td>
         <td><%= event.watch_date.strftime("%A %b %d, %Y") %></td>

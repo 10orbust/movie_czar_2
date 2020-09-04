@@ -2,7 +2,11 @@
 
 <p>
   <strong>Tsar:</strong>
-  <%= @event.tsar.first_name %>
+   <% if @event.tsar.present? %>
+        <td><%= event.tsar.first_name %></td>
+      <% else %>
+        <td>"Tsar not yet picked"</td>
+      <%end%>
 </p>
 
 <p>

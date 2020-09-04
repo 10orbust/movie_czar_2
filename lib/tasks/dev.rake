@@ -66,6 +66,8 @@ task({ :pick_tsar=> :environment}) do
          sample_tsar = final_tsars.pluck(:user_id).sample
          final_tsar = User.find_by(:id => sample_tsar)
         
+         event.tsar_id = final_tsar.id 
+         event.save
          # Create an instance of Postmark::ApiClient:
          client = Postmark::ApiClient.new(ENV['POSTMARKAPI'])
 
