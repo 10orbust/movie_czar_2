@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= form.label :event_start %>
-    <%= form.datetime_select :event_start %>
+    <%= form.datetime_select :event_start %> 
   </div>
 
   <div class="field">
@@ -44,7 +44,7 @@
 
   <div class="field">
     <%= form.label :repeats_every, "How often should your event repeat?" %>
-    <%= form.select :repeats_every, options_for_select([["Select One", ""], "week", "two_weeks", "month", "six_months", "year"]) %>
+    <%= form.select :repeats_every, options_for_select([["Select One", ""], "week", "two_weeks", "month", "six_months", "year"]) %> 
   </div>
 
  <%= hidden_field(:group, :creator_id, :value => current_user.id) %>

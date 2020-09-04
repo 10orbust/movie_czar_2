@@ -119,7 +119,7 @@ task({ :reminder_rsvp=> :environment}) do
                  subject: 'Event Reminder From Movie Tsar',
                  html_body: "Just a friendly reminder that you have a party coming #{event.watch_date.strftime("%A %b %e")} at
                  #{event.watch_date.strftime("%l:%M %p")}.  The patry takes place at #{event.group.address}
-                 Please follow this link to confirm your rsvp",
+                 Please follow this link to confirm your rsvp", 
                  track_opens: true,
                  message_stream: 'outbound')
             end
@@ -130,7 +130,7 @@ task({ :reminder_rsvp=> :environment}) do
     events3.each do |event|
         if event.group.rsvp_send_before == "1"
             
-            event.rsvps.where(:accepted => false).each do |rsvp|
+            event.rsvps.where(:accepted => false).each do |rsvp| 
                 # Create an instance of Postmark::ApiClient:
                 client = Postmark::ApiClient.new(ENV['POSTMARKAPI'])
 

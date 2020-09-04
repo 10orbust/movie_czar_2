@@ -18,7 +18,7 @@ class Invite < ApplicationRecord
     validates :group_id, :receiver_id, :sender_id, presence: true
     validates :receiver_id, uniqueness: { scope: :group_id,
       message: "Invite already created" }
-    validate :unique_combination
+    validate :unique_combination 
 
     def unique_combination
       Invite.exists?(
