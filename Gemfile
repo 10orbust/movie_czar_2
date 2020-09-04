@@ -7,7 +7,7 @@ gem 'rubocop-rails'
 gem 'devise'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem 'bootstrap', '~> 5.0.0.alpha1'
-gem 'dotenv-rails', groups: [:development, :test]
+
 gem 'postmark'
 gem 'jquery-rails'
 
@@ -44,6 +44,7 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'sqlite3', '~> 1.4'
+  gem 'dotenv-rails'
 end
 
 group :development do
