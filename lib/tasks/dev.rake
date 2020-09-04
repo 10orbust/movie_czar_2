@@ -75,11 +75,15 @@ task({ :reminder_rsvp=> :environment}) do
     events1 = Event.where("watch_date > ? and watch_date < ?", Date.today + 3, Date.today + 4)
     
 
-    emails = []
+   
     events1.each do |event|
         if event.group.rsvp_send_before == "3"
             event.rsvps.where(:accepted => false).each do |rsvp|
-                emails.push(rsvp.user.email)
+                p "Dear #{rsvp.user.first_name}"
+
+                p "Just a friendly reminder that you have a party coming up on #{event.watch_date.strftime("%A %b %e")} at  
+                #{event.watch_date.strftime("%l:%M %p")}.  The patry takes place at #{event.group.address}
+                Please follow this link to confirm your rsvp"
             end
         end
     end
@@ -88,7 +92,11 @@ task({ :reminder_rsvp=> :environment}) do
     events2.each do |event|
         if event.group.rsvp_send_before == "2"
             event.rsvps.where(:accepted => false).each do |rsvp|
-                emails.push(rsvp.user.email)
+                p "Dear #{rsvp.user.first_name}"
+
+                p "Just a friendly reminder that you have a party coming #{event.watch_date.strftime("%A %b %e")} at
+                #{event.watch_date.strftime("%l:%M %p")}.  The patry takes place at #{event.group.address}
+                Please follow this link to confirm your rsvp"
             end
         end
     end
@@ -99,9 +107,12 @@ task({ :reminder_rsvp=> :environment}) do
         if event.group.rsvp_send_before == "1"
             
             event.rsvps.where(:accepted => false).each do |rsvp|
+                p "Dear #{rsvp.user.first_name}"
 
+                p "Just a friendly reminder that you have a party coming tomorrow starting at 
+                #{event.watch_date.strftime("%l:%M %p")}.  The patry takes place at #{event.group.address}
+                Please follow this link to confirm your rsvp"
 
-                emails.push(rsvp.user.email)
             end
 
         end
