@@ -1,4 +1,4 @@
-desc "Create the repeating event and all of the RSVPS"
+xdesc "Create the repeating event and all of the RSVPS"
 task({ :new_events=> :environment}) do
     #Finds all the events in the next 24 hours
     events = Event.where("watch_date > ? and watch_date < ?", Date.today, Date.today + 1.day)
