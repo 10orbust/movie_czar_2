@@ -10,31 +10,52 @@
   </head>
 
   <body>
-    
-    
-    <% if user_signed_in? %>
-      <div><%= link_to "Sign out", :destroy_user_session, :method => :delete %></div>
-      <div><%= link_to "Edit info", :edit_user_registration %>
-      <div><%= link_to "Events", :events %>
-      <div><%= link_to "Groups", :groups %>
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            
+              <% if user_signed_in? %>
 
-      <%if current_user.unconfirmed_invites.count >= 1%>
-        <div><%= link_to "Invites (#{current_user.unconfirmed_invites.count})", :invites %>
-      <%else%>
-        <div><%= link_to "Invites", :invites %>
-      <%end%>
+                <li class = "nav-item active">
+                  <%= link_to "Events", :events , :class => "navbar-brand"%>
+                </li>
+              
+                <li class="nav-item">
+                <%= link_to "Groups", :groups, {:class => "nav-link"} %> 
+                </li>
 
-      <%if current_user.rsvps.where(:accepted => false).count >= 1%>
-        <div><%= link_to "Rsvps (#{current_user.rsvps.where(:accepted => false).count})", :rsvps %>
-      <%else%>
-        <div><%= link_to "Rsvps", :rsvps %>
-      <%end%>
-    <% else %>
-      <div><%= link_to "Sign up", :new_user_registration %></div>
-      <div><%= link_to "Sign in", :user_session %></div>
-    <% end %>
-    
-    
-    <%= yield %>
+                <li class="nav-item">
+                  <%if current_user.unconfirmed_invites.count >= 1%>
+                    <%= link_to "Invites (#{current_user.unconfirmed_invites.count})", :invites, {:class => "nav-link"} %>
+                  <%else%>
+                    <%= link_to "Invites", :invites, {:class => "nav-link"} %>
+                  <%end%>
+                </li>
+
+                <li class="nav-item">
+                  <%if current_user.rsvps.where(:accepted => false).count >= 1%>
+                    <%= link_to "Rsvps (#{current_user.rsvps.where(:accepted => false).count})", :rsvps, {:class => "nav-link"} %>
+                  <%else%>
+                    <%= link_to "Rsvps", :rsvps, {:class => "nav-link"} %>
+                  <%end%>
+                </li>
+
+                <%= link_to "Edit Profile", :edit_user_registration, {:class => "nav-link"} %>
+                <li class="nav-item navbar-right">
+                  <%= link_to "Sign out", :destroy_user_session, {:method => :delete, :class => "nav-link"} %>
+                </li>
+          
+              <% else %>
+                <%= link_to "Sign up", :new_user_registration, {:class => "nav-link"} %>
+                <%= link_to "Sign in", :user_session, {:class => "nav-link"} %>
+              <% end %>
+              
+              </ul>
+          </div>
+        </nav>
+
+        <%= yield %>
+      </div>
   </body>
 </html>
