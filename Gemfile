@@ -7,6 +7,9 @@ gem 'rubocop-rails'
 gem 'devise'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'postmark'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use sqlite3 as the database for Active Record
