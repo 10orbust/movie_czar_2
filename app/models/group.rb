@@ -28,4 +28,12 @@ class Group < ApplicationRecord
        invites.where(:accecpted => true).pluck(:receiver_id).each{|member_id| members.push(member_id)}
        return User.where(:id => members)
     end
+    def past_events
+    Event.where(:group_id => self.id).past_events 
+    end
+
+    def future_events
+        Event.where(:group_id => self.id).future_events 
+    end
+
 end

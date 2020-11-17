@@ -1,51 +1,53 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Tsar:</strong>
-   <% if @event.tsar.present? %>
-        <td><%= event.tsar.first_name %></td>
-      <% else %>
-        <td>"Tsar not yet picked"</td>
+<section class="jumbotron text-center">
+    <div class="container">
+      <% if @event.movie_watched == "Not yet decided"%>
+        <h1> Pick note yet decided
+      <%else%>
+        <h1> <%= @event.movie_watched %> </h1>
       <%end%>
-</p>
 
-<p>
-  <strong>Movie watched:</strong>
-  <%= @event.movie_watched %>
-</p>
+      <% if @event.tsar.present? %>
+        <h3>Tsar: <%= @event.tsar.first_name %></h3>
+      <% else %>
+        <h3>"Tsar not yet picked"</h3>
+      <%end%>
 
-<p>
-  <strong>Group:</strong>
-  <%= @event.group.title %>
-</p>
+      <p>Host:  <%= @event.group.creator.first_name %></p>
+      
+      <%if @event.watch_date < Date.today %>
+        <p>Watched On: <%= @event.watch_date.strftime("%A, %b %d") %> </p>
+      <%else%>
+        <p>Watching On: <%= @event.watch_date.strftime("%A, %b %d %l:%m %p") %> </p>
+      <%end%>
 
-<p>
-  <strong>Event Start:</strong>
-  <%= @event.watch_date.strftime("%A, %b %d") %>
-</p>
+      <%if @event.watch_date > Date.today %>
+        <p>Watch Location: <%= @event.group.address %> <p>
+      <%end%>
+    
+      <h2> Attendies </h2>
+      <div class="container px-lg-5">
+        <div class="row row-cols-5">
+        <%if @event.watch_date < Date.today %>
+          <% @event.rsvps.attended.each do |rsvp| %> 
+            <div class="col py-2 px-lg-5 ">
+              <%= rsvp.user.first_name %> 
+            </div>
+          <% end %> 
+        <%else%> 
+          <% @event.rsvps.each do |rsvp| %> 
+            <div class="col py-2 px-lg-5 ">
+              <%= rsvp.user.first_name %> <%= rsvp.accepted == true ? ("Rsvp'ed") : ("Has not Rsvp'ed")%> 
+            </div>
+          <% end %>
+        <%end%>
+        </div>
+      </div>
 
-<p>
-  <strong>Address:</strong>
-  <%= @event.group.address %>
-</p>
+  <%if @event.group.creator.id == current_user.id%>
+    <%= link_to 'Edit', edit_event_path(@event) %> 
+  <%end%>
 
-<p>
-  <strong>Rsvps</strong>
-</p>
+</section>
 
-<ul>
-  <% @event.rsvps.each do |rsvp| %> 
-    <li>
-      <%= rsvp.user.first_name %> <%= rsvp.accepted == true ? ("Rsvp'ed") : ("Has not Rsvp'ed")%> 
-    </li>
-
-  <% end %>
-</ul>
-
-<p>
-  <strong>Custom message:</strong>
-  <%= @event.custom_message %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>

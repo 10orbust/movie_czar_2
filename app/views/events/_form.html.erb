@@ -13,17 +13,12 @@
 
   <div class="field">
     <%= form.label :tsar_id %>
-    <%= form.number_field :tsar_id %>
+    <%= form.select :tsar_id, User.all.collect { |p| [ p.first_name, p.id ] } , { include_blank: 'Please choose' } %>
   </div>
 
   <div class="field">
     <%= form.label :movie_watched %>
     <%= form.text_field :movie_watched %>
-  </div>
-
-  <div class="field">
-    <%= form.label :group_id %>
-    <%= form.number_field :group_id %>
   </div>
 
   <div class="field">

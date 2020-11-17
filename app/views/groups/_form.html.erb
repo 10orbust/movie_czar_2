@@ -33,18 +33,18 @@
 
   <div class="field">
     <%= form.label :event_start %>
-    <%= form.datetime_select :event_start %>
+    <%= form.datetime_field :event_start %>
   </div>
 
   <div class="field">
     <%= form.label :rsvp_send_before, "How many days before the event should you send an RSVP?" %>
-    <%= form.select :rsvp_send_before, options_for_select([["Select One", ""], "1", "2", "3"]) %>
+    <%= form.select :rsvp_send_before, options_for_select(["2" , "1", "3"]) %>
 
   </div>
 
   <div class="field">
     <%= form.label :repeats_every, "How often should your event repeat?" %>
-    <%= form.select :repeats_every, options_for_select([["Select One", ""], "week", "two_weeks", "month", "six_months", "year"]) %>
+    <%= form.select :repeats_every, options_for_select(["week", "two_weeks", "month", "six_months", "year"]) %>
   </div>
 
  <%= hidden_field(:group, :creator_id, :value => current_user.id) %>

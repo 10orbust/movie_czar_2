@@ -1,75 +1,76 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @group.title %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @group.description %>
-</p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @group.address %>
-</p>
-
-<p>
-  <strong>Photo:</strong>
-  <%= @group.photo %>
-</p>
-
-<p>
-  <strong>Event start:</strong>
-  <%= @group.event_start %>
-</p>
-
-<p>
-  <strong>Rsvp send before:</strong>
-  <%= @group.rsvp_send_before %>
-</p>
-
-<p>
-  <strong>Repeats every:</strong>
-  <%= @group.repeats_every %>
-</p>
-
-<p>
-  <strong>Creator:</strong>
-  <%= @group.creator.first_name %>
-</p>
-
-<%if @group.creator_id == current_user.id  %>
-  <%= link_to 'Edit', edit_group_path(@group) %> 
-<%end%>
-
-  <%= link_to 'Back', groups_path %>
-
-<h2> Members </h2>
-<table>
-  <% @group.joined_members.each do |member|%>
-    <tr>
-      <td><%=member.first_name%></td>
-    </tr>
-  <%end%>
-</table>
-
-<%if @group.joined_members.where(:id => current_user.id).present?%>
-
-    <%= form_with model: @invite do |form| %>
-        <%= hidden_field(:invite, :sender_id, :value => current_user.id ) %>
-        <%= hidden_field(:invite, :accecpted, :value => false) %>
-        <%= hidden_field(:invite, :group_id, :value => @group.id) %>
-
-        <div class="field">
-          <%= form.label :receiver_id %>
-          <%= form.select :receiver_id, User.all.collect { |p| [ p.first_name, p.id ] } , { include_blank: 'Please choose' } %>
+  <section class="jumbotron text-center">
+    <div class="container">
+      
+        <%if @group.creator_id == current_user.id  %>
+         <h1> <%= link_to @group.title, edit_group_path(@group) %> </h1>
+        <%else%>
+        <h1><%= @group.title %></h1>
+        <%end%>
+      <p class="lead text-muted"><%= @group.description %></p>
+      <p>Address:   <%= @group.address %></p>
+      <p>First Event:  <%= @group.event_start.strftime("%b %d, %Y") %></p>
+      <p>Founder: <%= @group.creator.first_name %></p>
+      <p>Repeats Every: <%= @group.repeats_every.capitalize %> </p>
+    
+  <br>
+      <h2> Members </h2>
+      <div class="container px-lg-5">
+        <div class="row row-cols-5">
+          <% @group.joined_members.each do |member|%>
+          <div class="col py-2 px-lg-5 "><%=member.first_name%></div> 
+          <%end%>
         </div>
+      </div>
+  <br>
+    <%if @group.joined_members.where(:id => current_user.id).present?%>
+      <%= form_with model: @invite do |form| %>
+          <%= hidden_field(:invite, :sender_id, :value => current_user.id ) %>
+          <%= hidden_field(:invite, :accecpted, :value => false) %>
+          <%= hidden_field(:invite, :group_id, :value => @group.id) %>
 
-        <div class="actions">
-          <%= form.submit "Invite"%>
-        </div>
+          <div class="field">
+            <%= form.label :receiver_id, "Invite More People" %>
+            <%= form.select :receiver_id, User.all.collect { |p| [ p.first_name, p.id ] } , { include_blank: 'Please choose' } %>
+          </div>
+
+          <div class="actions">
+            <%= form.submit "Invite"%>
+          </div>
+      <%end%>
     <%end%>
-<%end%>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <h2 class="text-center">Past Events</h2>
+    <div class ="container">
+      <div class = "row">
+        <div class="row row-cols-4">
+            <%@group.past_events.each do |event|%>
+                <div class="col-sm-4">
+                  <div class="card text-center">
+                    <div class="card-header">
+                      <h5 class="card-title"><%=event.movie_watched%></h5>
+                    </div>
+                    <div class = "card-body">
+                      <p class="card-text">Movie Czar: <%=event.tsar.first_name%></p>
+                      <p class="card-text">Watch date: <%=event.watch_date.strftime("%b %d, %Y")%></p>
+                    </div>
+                  </div>
+                </div>
+            <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+
 

@@ -1,9 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @user_events %>
-
-<h1>Future Events</h1>
-
+<h1>Future Events</h1> 
+<h3><%= link_to "Create a group to start a recurring event", new_group_path %></h3>
 <table class ="table">
   <thead>
     <tr>
@@ -26,14 +24,14 @@
           <td>"Tsar not yet picked"</td>
         <%end%>
         <td><%= event.movie_watched %></td>
-        <td><%= event.group.title %></td>
+        <td><a href="groups/<%=event.group.id%>"><%= event.group.title %></a></td>
         <td><%= event.watch_date.strftime("%A %b %d, %Y") %></td>
         <td><%= event.watch_date.strftime(" %l:%m %p") %></td>
         <td><%= event.group.address %></td>
-        <td><%= link_to 'Show', event %></td>
+        <td><%= link_to 'Details', event %></td>
         <% if event.group.creator_id == current_user.id %>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Cancel', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Cancel Event', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>
@@ -58,18 +56,16 @@
       <tr>
         <td><%= event.tsar.first_name %></td>
         <td><%= event.movie_watched %></td>
-        <td><%= event.group.title %></td>
+        
+        <td><a href="groups/<%=event.group.id%>"><%= event.group.title %></a></td>
         <td><%= event.watch_date.strftime("%b %d, %Y") %></td>
-        <td><%= link_to 'Show', event %></td>
-         <% if event.group.creator_id == current_user.id %>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Cancel', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td><%= link_to 'Details', event %></td>
+        
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
 
-<%= link_to 'New Event', new_event_path %>
+
+

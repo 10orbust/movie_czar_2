@@ -15,4 +15,14 @@ class Rsvp < ApplicationRecord
     belongs_to(:event, { :required => false, :class_name => "Event", :foreign_key => "event_id" })
     validates :user_id, uniqueness: { scope: :event_id,
       message: "RSVP already created" }
+
+    def self.future_events
+      event_ids = self.pluck(:event_id)
+      events = Event.where(:id=> event_ids).where("watch_date > ?", Date.today).pluck(:id)
+      Rsvp.where(:event_id => events)
+    end
+
+    def self.attended
+      self.where(:accepted => true)
+    end
 end

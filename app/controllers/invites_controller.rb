@@ -28,7 +28,7 @@ class InvitesController < ApplicationController
 
     respond_to do |format|
       if @invite.save
-        format.html { redirect_to @invite, notice: 'Invite was successfully created.' }
+        format.html { redirect_to group_path(@invite.group_id), notice: 'Invite was successfully created.' }
         format.json { render :show, status: :created, location: @invite }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class InvitesController < ApplicationController
   def update
     respond_to do |format|
       if @invite.update(invite_params)
-        format.html { redirect_to :events, notice: 'Invite was successfully updated.' }
+        format.html { redirect_to group_path(@invite.group_id), notice: 'Invite was successfully updated.' }
         format.json { render :show, status: :ok, location: @invite }
       else
         format.html { render :edit }
