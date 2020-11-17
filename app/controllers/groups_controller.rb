@@ -35,6 +35,22 @@ class GroupsController < ApplicationController
         invite.accecpted = true
         invite.group_id = @group.id
         invite.save 
+
+        event = Event.new
+        event.custom_message = "blank"
+        event.movie_watched = nil
+        event.watch_date = @group.event_start
+        event.tsar_id = nil
+        event.group_id = @group.id
+        event.save
+
+        rsvp = Rsvp.new
+        rsvp.accecpted = true
+        rsvp.event_id = event.id
+        rsvp.user_id = current_user.id
+        rsvp.save
+
+
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
