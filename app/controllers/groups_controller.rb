@@ -45,7 +45,7 @@ class GroupsController < ApplicationController
         event.save
 
         rsvp = Rsvp.new
-        rsvp.accecpted = true
+        rsvp.accepted = true
         rsvp.event_id = event.id
         rsvp.user_id = current_user.id
         rsvp.save
