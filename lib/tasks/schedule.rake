@@ -23,7 +23,8 @@ task({ :new_events=> :environment}) do
             end
         event.watch_date
         event.save 
-
+        
+        p event
         #Sets up all the Rsvp's for current members. 
         group.joined_members.each do |member|
             rsvp = Rsvp.new
@@ -48,6 +49,10 @@ task({ :pick_tsar=> :environment}) do
                     attendance_count = Rsvp.where("user_id = ? and accepted = ?", rsvp.user.id, true).count
                     possible_tsars.push({:user => rsvp.user.first_name, :user_id => rsvp.user.id, :count => Event.where(:tsar => rsvp.user_id).count, :attendance => attendance_count })
              end
+        p event.id
+        p possible_tsars
+        next if possible_tsars == []
+    
         final_tsars = []
         possible_tsars.each do |tsar|
             ratio = tsar[:count] / tsar[:attendance]
@@ -65,20 +70,25 @@ task({ :pick_tsar=> :environment}) do
         end
          sample_tsar = final_tsars.pluck(:user_id).sample
          final_tsar = User.find_by(:id => sample_tsar)
-        
-         event.tsar_id = final_tsar.id 
+         event.tsar_id = final_tsar
          event.save
-         # Create an instance of Postmark::ApiClient:
-         client = Postmark::ApiClient.new(ENV['POSTMARKAPI'])
+        
+        #Sends a notice to the chosen Czar to pick the movie for the event
+        require 'twilio-ruby'
 
-         # Send an email:
-         client.deliver(
-         from: 'patrick@firstdraft.com',
-         to: final_tsar.email,
-         subject: 'You are the new latest Tsar',
-         html_body: "You have been chosen to be the newest Movie Tsar, please choose a movie for the upcoming night",
-         track_opens: true,
-         message_stream: 'outbound')
+        # put your own credentials here
+        account_sid = ENV['TWILIOSID']
+        auth_token = ENV['TWILIOAPI']
+
+        # set up a client to talk to the Twilio REST API
+        @client = Twilio::REST::Client.new account_sid, auth_token
+        
+        message_body = "Congrats #{final_tsar.first_name}, you have been chosen to pick the next movie. Please reply with the name of the movie"
+        @client.messages.create(
+            from: '+16172094441',
+            to: final_tsar.phone_number,
+            body: message_body
+          )
     end
 end
 
