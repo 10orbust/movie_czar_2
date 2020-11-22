@@ -10,6 +10,7 @@ gem 'bootstrap', '~> 5.0.0.alpha1'
 
 gem 'postmark'
 gem 'jquery-rails'
+gem 'twilio-ruby', '~> 5.43.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'

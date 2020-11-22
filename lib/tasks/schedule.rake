@@ -148,3 +148,21 @@ task({ :reminder_rsvp=> :environment}) do
         end
     end
 end
+
+
+task({ :twilio_test => :environment}) do
+    require 'twilio-ruby'
+
+    # put your own credentials here
+    account_sid = ENV['TWILIOSID']
+    auth_token = ENV['TWILIOAPI']
+    
+    # set up a client to talk to the Twilio REST API
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    @client.messages.create(
+        from: '+16172094441',
+        to: '+18603894124',
+        body: 'Hey Kyle, I hope that you are having a wonderful day!'
+      )
+end
