@@ -1,9 +1,12 @@
 desc "Create the repeating event and all of the RSVPS"
 task({ :new_events=> :environment}) do
     #Finds all the events in the next 24 hours
-    events = Event.where("watch_date > ? and watch_date < ?", Date.today, Date.today + 1.day)
-
+    events = Event.where("watch_date >= ? and watch_date <= ?", Date.today - 1.day, Date.today)
+    p events
     #Creates the new events based on how far in the future they are
+
+    if events.first != nil
+
     events.each do |old_event|
         group = old_event.group
         event = Event.new
@@ -22,6 +25,7 @@ task({ :new_events=> :environment}) do
                 event.watch_date = old_event.watch_date + 1.year
             end
         event.watch_date
+        p event.erros.full_messages
         event.save 
 
         #Sets up all the Rsvp's for current members. 
@@ -33,6 +37,7 @@ task({ :new_events=> :environment}) do
             rsvp.save
         end
 
+    end
     end
 
 end
